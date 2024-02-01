@@ -1,10 +1,10 @@
-import { Input } from "~/shared/ui/input";
+import { Input } from "@nextui-org/react";
 
 const MovieSearch = () => {
   return (
-    <>
-      <Input />
-    </>
+    <div className="flex gap-[20px]">
+      <Input placeholder="Search" />
+    </div>
   );
 };
 

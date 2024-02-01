@@ -3,7 +3,7 @@ import { INFO } from "~/shared/lib";
 
 const Header = () => {
   return (
-    <header className="border-b-2 border-violet-900 px-[20px]">
+    <header className="px-[20px]">
       <nav className="w-full py-[20px]">
         <ul className="flex w-full gap-[20px]">
           {INFO.pages.map((item) => (
