@@ -1,9 +1,14 @@
 import { type AppType } from "next/dist/shared/lib/utils";
 
-import "~/styles/globals.css";
+import "~/app/styles/globals.css";
+import { ThemeProvider } from "~/shared/providers";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider defaultTheme="dark">
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 };
 
 export default MyApp;
