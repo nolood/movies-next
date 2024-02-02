@@ -18,6 +18,7 @@ const RootLayout = ({
         <meta key={"description"} name="description" content="description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Header />
       <main
         className={clsx("flex flex-1 flex-col px-[20px] py-[50px]", className)}
