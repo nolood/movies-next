@@ -1,1 +1,1 @@
-export { INFO } from "./info";
+export { INFO, data } from "./info";

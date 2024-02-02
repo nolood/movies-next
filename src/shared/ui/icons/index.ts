@@ -1,1 +1,1 @@
-export { default as FindIcon } from "./find";
+export { default as StarIcon } from "./star";
