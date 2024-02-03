@@ -2,15 +2,8 @@ import Head from "next/head";
 import { type ReactNode } from "react";
 import { Header } from "~/widgets/header/ui";
 import { Footer } from "~/widgets/footer/ui";
-import clsx from "clsx";
 
-const RootLayout = ({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
+const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Head>
@@ -20,9 +13,7 @@ const RootLayout = ({
       </Head>
 
       <Header />
-      <main
-        className={clsx("flex flex-1 flex-col px-[20px] py-[50px]", className)}
-      >
+      <main className={"flex flex-1 flex-col px-[20px] py-[50px]"}>
         {children}
       </main>
       <Footer />
