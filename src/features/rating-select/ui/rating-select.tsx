@@ -1,14 +1,25 @@
 import { StarIcon } from "lucide-react";
 import { useCallback, useState } from "react";
+import { type IMovie } from "~/entities/movie/model/types";
+import { useMutation } from "@tanstack/react-query";
+import { sendRating } from "~/features/rating-select/lib";
 
-const RatingSelect = () => {
+const RatingSelect = ({ item }: { item: IMovie }) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const [rating, setRating] = useState<number>(-1);
 
-  const handleClick = useCallback((index: number) => {
-    setActiveIndex(index);
-    setRating(index);
-  }, []);
+  const mutation = useMutation({
+    mutationFn: sendRating,
+  });
+
+  const handleClick = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+      setRating(index);
+      mutation.mutate({ imdbId: item.imdbID, rating: index });
+    },
+    [item, mutation],
+  );
 
   return (
     <div className="flex">

@@ -16,7 +16,7 @@ const List = memo(
     if (!data.pages[0]?.data) return "No data";
 
     return (
-      <div className="grid grid-cols-4 gap-[20px]">
+      <div className="grid grid-cols-4 gap-[20px] max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
         {data.pages.map((page) => (
           <Fragment key={crypto.randomUUID()}>
             {page?.data.map((movie) => (
@@ -25,7 +25,7 @@ const List = memo(
                   item={movie}
                   footer={
                     <>
-                      <RatingSelect />
+                      <RatingSelect item={movie} />
                       <ViewMark />
                     </>
                   }
@@ -41,13 +41,15 @@ const List = memo(
 
 List.displayName = "List";
 
+// TODO: Стоит подумать над тем, чтобы разделить этот компонент, возможно запрос вынести в pages
+
 const MoviesList = () => {
   const { ref, inView } = useInView();
   const [searchValue, setSearchValue] = useState<string>("");
 
   const debouncedSearch = useDebounce(searchValue, 500);
 
-  const { data, isLoading, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["movies", debouncedSearch],
     queryFn: (data) => fetchMovies(data.pageParam, debouncedSearch),
     getNextPageParam: (lastPage) => lastPage?.nextPage,
