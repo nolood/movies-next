@@ -50,7 +50,7 @@ const MoviesList = () => {
   const debouncedSearch = useDebounce(searchValue, 500);
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["movies", debouncedSearch],
+    queryKey: ["movies-list", debouncedSearch],
     queryFn: (data) => fetchMovies(data.pageParam, debouncedSearch),
     getNextPageParam: (lastPage) => lastPage?.nextPage,
     initialPageParam: 1,

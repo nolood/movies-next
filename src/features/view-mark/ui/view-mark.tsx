@@ -10,7 +10,10 @@ import { type IMovie } from "~/entities/movie/model/types";
 const ViewMark = ({ item }: { item: IMovie }) => {
   const [isViewed, setIsViewed] = useState(false);
 
-  const mutations = useMutation({ mutationFn: setViewedMark });
+  const mutations = useMutation({
+    mutationKey: ["set-viewed"],
+    mutationFn: setViewedMark,
+  });
 
   const handleClick = useCallback(
     (value: boolean) => {

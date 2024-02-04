@@ -17,6 +17,7 @@ const RatingSelect = ({
   const [rating, setRating] = useState<number>(staticRating ?? -1);
 
   const mutation = useMutation({
+    mutationKey: ["set-rating"],
     mutationFn: sendRating,
   });
 
