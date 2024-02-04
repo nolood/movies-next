@@ -1,9 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { db } from "~/server/db";
+import { movie } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
-type ResponseData = any;
+type RequestData = {
+  movie: {
+    imdbId: string;
+    poster: string;
+    title: string;
+  };
+  value: boolean;
+};
+
+type ResponseData = void;
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  res.status(200);
+  if (req.method === "POST") {
+    const body: RequestData = req.body;
+
+    if (!body.movie || !body.value) res.status(400);
+
+    const isMovie = await db
+      .select()
+      .from(movie)
+      .where(eq(movie.imdbId, String(body.movie.imdbId)));
+
+    if (isMovie.length) {
+      await db
+        .update(movie)
+        .set({ isViewed: body.value })
+        .where(eq(movie.imdbId, String(body.movie.imdbId)));
+    } else {
+      await db.insert(movie).values({ ...body.movie, isViewed: body.value });
+    }
+
+    res.status(200);
+  }
 }

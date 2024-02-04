@@ -26,7 +26,7 @@ const List = memo(
                   footer={
                     <>
                       <RatingSelect item={movie} />
-                      <ViewMark />
+                      <ViewMark item={movie} />
                     </>
                   }
                 />

@@ -1,19 +1,19 @@
 import { api } from "~/shared/api/api";
 import { type IMovie } from "~/entities/movie/model/types";
 
-export const sendRating = async ({
+export const setViewedMark = async ({
   movie,
-  rating,
+  value,
 }: {
   movie: IMovie;
-  rating: number;
+  value: boolean;
 }) => {
   try {
-    await api.post("/api/rating", {
+    await api.post("/api/viewed", {
       movie: { imdbId: movie.imdbID, poster: movie.Poster, title: movie.Title },
-      rating,
+      value,
     });
   } catch (e) {
-    console.error(e);
+    console.log(e);
   }
 };

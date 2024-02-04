@@ -19,8 +19,6 @@ export default async function handler(
   const page = parseInt(req.query?.page as string) || 1;
   const search = String(req.query?.search);
 
-  console.log(search);
-
   if (search) {
     const data = await serverApi.get<Response>(`/?s=${search}&page=${page}`);
 

@@ -1,27 +1,25 @@
-import { type IMovie } from "~/entities/movie/model/types";
+import { type IViewedMovie } from "~/entities/movie/model/types";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { memo, type ReactNode } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-const MovieCard = memo(
-  ({ item, footer }: { item: IMovie; footer?: ReactNode }) => {
+const MovieViewedCard = memo(
+  ({ item, footer }: { item: IViewedMovie; footer?: ReactNode }) => {
     const router = useRouter();
     return (
       <Card>
         <CardHeader className="h-[80px]">
-          <p className="w-full text-center">
-            {item.Title} {item.Year}
-          </p>
+          <p className="w-full text-center">{item.title}</p>
         </CardHeader>
         <CardBody
           className="flex items-center"
-          onClick={() => router.push("/movies/" + item.imdbID)}
+          onClick={() => router.push("/movies/" + item.imdbId)}
         >
           <Image
             src={
-              item.Poster !== "N/A" && item.Poster
-                ? item.Poster
+              item.poster !== "N/A" && item.poster
+                ? item.poster
                 : "/no-poster.png"
             }
             width={250}
@@ -38,6 +36,6 @@ const MovieCard = memo(
   },
 );
 
-MovieCard.displayName = "MovieCard";
+MovieViewedCard.displayName = "MovieViewedCard";
 
-export default MovieCard;
+export default MovieViewedCard;

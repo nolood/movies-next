@@ -16,7 +16,9 @@ export const movie = createTable("movies", {
   id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   rating: int("rating", { mode: "number" }),
   isViewed: int("isViewed", { mode: "boolean" }),
-  imdbId: text("imdbId").notNull(),
+  imdbId: text("imdbId"),
+  poster: text("poster"),
+  title: text("title"),
   createdAt: int("created_at", { mode: "timestamp" })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

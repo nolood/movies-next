@@ -11,6 +11,15 @@ export interface IMovieRating {
   Value: string;
 }
 
+export interface IViewedMovie {
+  id: number;
+  isViewed: boolean;
+  title: string;
+  poster: string;
+  rating: number | null;
+  imdbId: string;
+}
+
 export interface IFullMovie extends IMovie {
   Actors: string;
   Awards: string;

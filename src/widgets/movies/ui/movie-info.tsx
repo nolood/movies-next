@@ -22,7 +22,7 @@ const MovieInfo = ({ data }: { data: IFullMovie | null }) => {
         <div className="flex flex-col justify-between">
           <h1 className="text-2xl">{data.Title}</h1>
           <div className="flex gap-[50px]">
-            <ViewMark />
+            <ViewMark item={data} />
             <RatingSelect item={data} />
           </div>
         </div>

@@ -3,30 +3,42 @@ import { db } from "~/server/db";
 import { movie } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 
-type ResponseData = any;
+type RequestData = {
+  movie: {
+    imdbId: string;
+    poster: string;
+    title: string;
+  };
+  rating: number;
+};
+
+type ResponseData = void;
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  const { imdbId, rating } = req.body;
+  // TODO: Возможно при выставлении оценки стоило бы сразу сделать фильм просмотренным
+  if (req.method === "POST") {
+    const body: RequestData = req.body;
 
-  if (!imdbId || !rating) res.status(400);
+    if (!body.movie.imdbId || !body.rating) res.status(400);
 
-  const isMovie = await db
-    .select()
-    .from(movie)
-    .where(eq(movie.imdbId, String(imdbId)));
+    const isMovie = await db
+      .select()
+      .from(movie)
+      .where(eq(movie.imdbId, String(body.movie.imdbId)));
 
-  if (isMovie) {
-    await db
-      .update(movie)
-      .set({ rating: Number(rating) })
-      .where(eq(movie.imdbId, String(imdbId)));
-  } else {
-    await db
-      .insert(movie)
-      .values({ imdbId: String(imdbId), rating: Number(rating) });
+    if (isMovie.length) {
+      await db
+        .update(movie)
+        .set({ rating: Number(body.rating) })
+        .where(eq(movie.imdbId, String(body.movie.imdbId)));
+    } else {
+      await db
+        .insert(movie)
+        .values({ ...body.movie, rating: Number(body.rating) });
+    }
+
+    res.status(200);
   }
-
-  res.status(200);
 }

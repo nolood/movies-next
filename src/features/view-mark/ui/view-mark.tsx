@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@nextui-org/react";
 import { Chip } from "@nextui-org/chip";
+import { useMutation } from "@tanstack/react-query";
+import { setViewedMark } from "~/features/view-mark/lib/set-viewed-mark";
+import { type IMovie } from "~/entities/movie/model/types";
 
-const ViewMark = () => {
+// TODO: Такая же ситуация как и с rating-select
+
+const ViewMark = ({ item }: { item: IMovie }) => {
   const [isViewed, setIsViewed] = useState(false);
+
+  const mutations = useMutation({ mutationFn: setViewedMark });
+
+  const handleClick = useCallback(
+    (value: boolean) => {
+      setIsViewed(value);
+      mutations.mutate({ movie: item, value });
+    },
+    [item],
+  );
 
   if (!isViewed) {
     return (
-      <Button className={"!h-[31px]"} onClick={() => setIsViewed(true)}>
+      <Button className={"!h-[31px]"} onClick={() => handleClick(true)}>
         Mark viewed
       </Button>
     );
   }
 
   return (
-    <Chip onClick={() => setIsViewed(false)} color="primary">
+    <Chip onClick={() => handleClick(false)} color="primary">
       Viewed
     </Chip>
   );
